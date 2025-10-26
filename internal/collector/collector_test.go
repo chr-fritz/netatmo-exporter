@@ -158,6 +158,19 @@ func TestNetatmoCollector_Collect(t *testing.T) {
 						LastMeasure: int64Ptr(3503),
 					},
 				},
+				{
+					ID:             "aa:bb:cc:dd:ee:f4",
+					ModuleName:     "Rain Gauge",
+					BatteryPercent: int32Ptr(60),
+					RFStatus:       int32Ptr(70),
+					Type:           "NAModule3",
+					DashboardData: netatmo.DashboardData{
+						Rain:        float32Ptr(23),
+						Rain1Hour:   float32Ptr(75),
+						Rain1Day:    float32Ptr(750),
+						LastMeasure: int64Ptr(3503),
+					},
+				},
 			},
 		},
 	}
@@ -206,6 +219,7 @@ netatmo_refresh_interval_seconds 3600
 # TYPE netatmo_sensor_battery_percent gauge
 netatmo_sensor_battery_percent{home="Home",module="Bedroom",station="Home (Living Room)"} 55
 netatmo_sensor_battery_percent{home="Home",module="Outside",station="Home (Living Room)"} 70
+netatmo_sensor_battery_percent{home="Home",module="Rain Gauge",station="Home (Living Room)"} 60
 netatmo_sensor_battery_percent{home="Home",module="id-aa:bb:cc:dd:ee:f3",station="Home (Living Room)"} 60
 # HELP netatmo_sensor_co2_ppm Carbondioxide measurement in parts per million
 # TYPE netatmo_sensor_co2_ppm gauge
@@ -224,10 +238,20 @@ netatmo_sensor_noise_db{home="Home",module="Living Room",station="Home (Living R
 # HELP netatmo_sensor_pressure_mb Atmospheric pressure measurement in millibar
 # TYPE netatmo_sensor_pressure_mb gauge
 netatmo_sensor_pressure_mb{home="Home",module="Living Room",station="Home (Living Room)"} 1234
+# HELP netatmo_sensor_rain_amount_mm Rain amount in millimeters
+# TYPE netatmo_sensor_rain_amount_mm gauge
+netatmo_sensor_rain_amount_mm{home="Home",module="Rain Gauge",station="Home (Living Room)"} 23
+# HELP netatmo_sensor_rain_last_hour_mm Amount of rain in last hour
+# TYPE netatmo_sensor_rain_last_hour_mm counter
+netatmo_sensor_rain_last_hour_mm{home="Home",module="Rain Gauge",station="Home (Living Room)"} 75
+# HELP netatmo_sensor_rain_sum_today_mm Amount of rain today
+# TYPE netatmo_sensor_rain_sum_today_mm counter
+netatmo_sensor_rain_sum_today_mm{home="Home",module="Rain Gauge",station="Home (Living Room)"} 750
 # HELP netatmo_sensor_rf_signal_strength RF signal strength (90: lowest, 60: highest)
 # TYPE netatmo_sensor_rf_signal_strength gauge
 netatmo_sensor_rf_signal_strength{home="Home",module="Bedroom",station="Home (Living Room)"} 80
 netatmo_sensor_rf_signal_strength{home="Home",module="Outside",station="Home (Living Room)"} 57
+netatmo_sensor_rf_signal_strength{home="Home",module="Rain Gauge",station="Home (Living Room)"} 70
 netatmo_sensor_rf_signal_strength{home="Home",module="id-aa:bb:cc:dd:ee:f3",station="Home (Living Room)"} 70
 # HELP netatmo_sensor_temperature_celsius Temperature measurement in celsius
 # TYPE netatmo_sensor_temperature_celsius gauge
@@ -240,6 +264,7 @@ netatmo_sensor_temperature_celsius{home="Home",module="id-aa:bb:cc:dd:ee:f3",sta
 netatmo_sensor_updated{home="Home",module="Bedroom",station="Home (Living Room)"} 3502
 netatmo_sensor_updated{home="Home",module="Living Room",station="Home (Living Room)"} 3500
 netatmo_sensor_updated{home="Home",module="Outside",station="Home (Living Room)"} 3501
+netatmo_sensor_updated{home="Home",module="Rain Gauge",station="Home (Living Room)"} 3503
 netatmo_sensor_updated{home="Home",module="id-aa:bb:cc:dd:ee:f3",station="Home (Living Room)"} 3503
 # HELP netatmo_sensor_wifi_signal_strength Wifi signal strength (86: bad, 71: avg, 56: good)
 # TYPE netatmo_sensor_wifi_signal_strength gauge
