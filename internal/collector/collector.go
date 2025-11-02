@@ -95,6 +95,11 @@ var (
 		"Rain amount in millimeters",
 		varLabels,
 		nil)
+	rain1DayDesc = prometheus.NewDesc(
+		sensorPrefix+"rain_sum_today_mm",
+		"Amount of rain today",
+		varLabels,
+		nil)
 
 	batteryDesc = prometheus.NewDesc(
 		sensorPrefix+"battery_percent",
@@ -158,6 +163,7 @@ func (c *NetatmoCollector) Describe(dChan chan<- *prometheus.Desc) {
 	dChan <- windStrengthDesc
 	dChan <- windDirectionDesc
 	dChan <- rainDesc
+	dChan <- rain1DayDesc
 	dChan <- batteryDesc
 	dChan <- wifiDesc
 	dChan <- rfDesc
@@ -270,6 +276,9 @@ func (c *NetatmoCollector) collectData(ch chan<- prometheus.Metric, device *neta
 
 	if data.Rain != nil {
 		c.sendMetric(ch, rainDesc, prometheus.GaugeValue, float64(*data.Rain), moduleName, stationName, homeName)
+	}
+	if data.Rain1Day != nil {
+		c.sendMetric(ch, rain1DayDesc, prometheus.CounterValue, float64(*data.Rain1Day), moduleName, stationName, homeName)
 	}
 
 	if device.BatteryPercent != nil {
